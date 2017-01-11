@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
+  devtool: 'cheap-module-source-map',
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
