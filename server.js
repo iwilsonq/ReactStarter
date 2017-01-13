@@ -5,10 +5,13 @@ const app = express();
 app.get('/hello', (req, res) => res.send({ hi: 'there' }))
 
 if (process.env.NODE_ENV !== 'production') {
-  const webpackMiddleware = require('webpack-dev-middleware');
   const webpack = require('webpack');
   const webpackConfig = require('./webpack.config.js');
-  app.use(webpackMiddleware(webpack(webpackConfig)));
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const compiler = webpack(webpackConfig)
+  app.use(webpackDevMiddleware(compiler));
+  app.use(webpackHotMiddleware(compiler));
 } else {
   app.use(express.static('dist'));
   app.get('*', (req, res) => {
@@ -16,4 +19,5 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-app.listen(process.env.PORT || 3050, () => console.log('listening'));
+app.set('port', process.env.PORT || 3050)
+app.listen(app.get('port'), () => console.log(`Listening at http://localhost:${app.get('port')}`));
