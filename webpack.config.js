@@ -7,7 +7,6 @@ const config = {
   devtool: 'cheap-module-source-map',
   entry: [
     './src/index.js',
-    'webpack-hot-middleware/client'
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -34,8 +33,7 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 };
 

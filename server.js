@@ -6,12 +6,9 @@ app.get('/hello', (req, res) => res.send({ hi: 'there' }))
 
 if (process.env.NODE_ENV !== 'production') {
   const webpack = require('webpack');
-  const webpackConfig = require('./webpack.config.js');
   const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
-  const compiler = webpack(webpackConfig)
-  app.use(webpackDevMiddleware(compiler));
-  app.use(webpackHotMiddleware(compiler));
+  const webpackConfig = require('./webpack.config.js');
+  app.use(webpackDevMiddleware(webpack(webpackConfig)));
 } else {
   app.use(express.static('dist'));
   app.get('*', (req, res) => {
